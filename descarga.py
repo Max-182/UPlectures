@@ -53,12 +53,14 @@ pg.press('esc')
 pagina_base = browser.current_url
 
 # Videos de un curso
+browser.get(pagina_base)
 boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
 boton_desplegable.click()
 busqueda = browser.find_element_by_class_name("select2-search__field")
 busqueda_desplegable = browser.find_element_by_xpath('//*[@id="ctl00_Html1"]/body/span/span/span[1]/input')
 busqueda_desplegable.send_keys("sem. m&")  # Nombre del curso
 busqueda_desplegable.send_keys(Keys.ENTER)
+
 
 # Scraping
 pg.hotkey('ctrl', 'shift', 'i')
@@ -169,5 +171,5 @@ for i in range(len(marco1['Link2'])):
                  + marco1['Sección'].loc[i] + '_'
                  + marco1['Nombre de la sesión'].loc[i] + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
     pg.press('enter')
-    print("video descargándose %s" % (i + 1) + " de %s" % (len(marco1['Link2'])) + ("(%s%%)") % (round((i + 1) * 100 / (len(marco1['Link2'])), 2)))
+    print("video descargándose %s" % (i + 1) + " /%s " % (len(marco1['Link2'])) + ("(%s%%)") % (round((i + 1) * 100 / (len(marco1['Link2'])), 2)))
     time.sleep(2)
