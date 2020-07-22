@@ -58,7 +58,7 @@ boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
 boton_desplegable.click()
 busqueda = browser.find_element_by_class_name("select2-search__field")
 busqueda_desplegable = browser.find_element_by_xpath('//*[@id="ctl00_Html1"]/body/span/span/span[1]/input')
-busqueda_desplegable.send_keys("sem. m&")  # Nombre del curso
+busqueda_desplegable.send_keys("estadistica aplicada(d")  # Nombre del curso
 busqueda_desplegable.send_keys(Keys.ENTER)
 
 
@@ -155,10 +155,6 @@ for i in range(len(cabeceras)):
 
 # Descargar con nombre
 for i in range(len(marco1['Link2'])):
-    if i < 5:
-        pass  # Esto para que los primeros 5 videos los pueda descargar a la vez
-    else:
-        time.sleep(100)  # Luego esperará 100 segundos por cada descarga
     browser.get(marco1['Link2'].loc[i])  # Entra al enlace
     time.sleep(10)
     pg.press('space')  # Pausar el video
@@ -169,7 +165,12 @@ for i in range(len(marco1['Link2'])):
         time.sleep(10)
     pg.typewrite(marco1['Curso'].loc[i] + '_'
                  + marco1['Sección'].loc[i] + '_'
-                 + marco1['Nombre de la sesión'].loc[i] + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
+                 + "(%s de " % (i + 1) + "%s)" % (len(marco1['Link2'])) + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
     pg.press('enter')
     print("video descargándose %s" % (i + 1) + " /%s " % (len(marco1['Link2'])) + ("(%s%%)") % (round((i + 1) * 100 / (len(marco1['Link2'])), 2)))
+    y = marco1['Duración'].loc[i]
+    espera = int(y[0]) * 3600 + int(y[2:3]) * 60 + int(y[-2:-1])  # El tiempo de espera entre descargas dependerá de lo largo del video
+    print("este video dura %s " % marco1['Duración'].loc[i])
+    print("próximo video se descargará en %s" % round((espera / 60), 1))
+    time.sleep(espera / 60)  # Descargará aproximadamente cuando termine el anterior
     time.sleep(2)
