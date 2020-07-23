@@ -9,6 +9,10 @@ import pyautogui as pg
 import pyperclip as pc
 import time
 
+usuarioUP = "*"
+contraseñaUP = "*"
+cursoUP = "sem. m&"
+
 # Subrutinas necesaria
 
 
@@ -39,8 +43,8 @@ browser = webdriver.Chrome("C:\Program Files (x86)\chromedriver83.exe")  # Acá 
 browser.get("https://autoservicio2.up.edu.pe/ss/Home.aspx")
 barra_user = browser.find_element_by_id("ctl00_ucUserLogin_lvLoginUser_ucLoginUser_lcLoginUser_UserName")
 barra_password = browser.find_element_by_id("ctl00_ucUserLogin_lvLoginUser_ucLoginUser_lcLoginUser_Password")
-barra_user.send_keys("*")  # Acá poner su usuario UP
-barra_password.send_keys("*")  # Acá la contraseña
+barra_user.send_keys(usuarioUP)  # Acá poner su usuario UP
+barra_password.send_keys(contraseñaUP)  # Acá la contraseña
 barra_password.send_keys(Keys.ENTER)
 boton_clases = browser.find_element_by_link_text("Clases")
 boton_clases.send_keys(Keys.ENTER)
@@ -58,7 +62,7 @@ boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
 boton_desplegable.click()
 busqueda = browser.find_element_by_class_name("select2-search__field")
 busqueda_desplegable = browser.find_element_by_xpath('//*[@id="ctl00_Html1"]/body/span/span/span[1]/input')
-busqueda_desplegable.send_keys("estadistica aplicada(d")  # Nombre del curso
+busqueda_desplegable.send_keys(cursoUP)  # Nombre del curso
 busqueda_desplegable.send_keys(Keys.ENTER)
 
 
@@ -83,6 +87,7 @@ with open('html.html', "wb") as file:
 
 # Obtener nombres de cursos
 cursoslista = soup.find('select', {"id": "searchCursos"})
+time.sleep(3)
 cursostexto = cursoslista.contents
 cursos = []  # Acá están los nombres de todos los cursos UP
 for i in range(1, len(cursostexto)):
@@ -156,13 +161,24 @@ for i in range(len(cabeceras)):
 # Descargar con nombre
 for i in range(len(marco1['Link2'])):
     browser.get(marco1['Link2'].loc[i])  # Entra al enlace
-    time.sleep(10)
-    pg.press('space')  # Pausar el video
     pg.hotkey('ctrl', 's')  # Guardar como
-    if i < 5:
-        time.sleep(3)
-    else:
-        time.sleep(10)
+    # time.sleep(10)
+    # pg.press('space')  # Pausar el video
+    time.sleep(10)
+    # Esto siguiente lo pongo para descargarlo a mi disco duro externo
+    if i == 0:
+        for j in range(3):
+            time.sleep(0.5)
+            pg.hotkey('shift', 'tab')
+        for j in range(45):
+            pg.press('down')
+        time.sleep(1)
+        pg.press('up')
+        time.sleep(1)
+        pg.press('enter')
+        for j in range(3):
+            time.sleep(0.7)
+            pg.press('tab')
     pg.typewrite(marco1['Curso'].loc[i] + '_'
                  + marco1['Sección'].loc[i] + '_'
                  + "(%s de " % (i + 1) + "%s)" % (len(marco1['Link2'])) + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
