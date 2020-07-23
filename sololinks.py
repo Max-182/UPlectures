@@ -34,8 +34,8 @@ def continuarsiseencuentra(imagen):
             continue
 
 
-usuarioUP = "jm.huamanpi"
-contraseñaUP = "831134DD"
+usuarioUP = "*"
+contraseñaUP = "*"
 
 # Entrar a PowerCanpus
 browser = webdriver.Chrome("C:\Program Files (x86)\chromedriver83.exe")  # Acá puse el driver
@@ -61,7 +61,7 @@ boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
 boton_desplegable.click()
 busqueda = browser.find_element_by_class_name("select2-search__field")
 busqueda_desplegable = browser.find_element_by_xpath('//*[@id="ctl00_Html1"]/body/span/span/span[1]/input')
-busqueda_desplegable.send_keys("a")  # Nombre del curso
+busqueda_desplegable.send_keys("a")
 busqueda_desplegable.send_keys(Keys.ENTER)
 
 # Scraping inicial
@@ -90,7 +90,8 @@ cursostexto = cursoslista.contents
 cursos = []  # Acá están los nombres de todos los cursos UP
 for i in range(1, len(cursostexto)):
     cursos.append(cursostexto[i].text)
-del cursos[0] #FALTA EL CURSO DE ACTO JURÍDICO (EL PRIMERO)
+
+del cursos[0]  # FALTA EL CURSO DE ACTO JURÍDICO (EL PRIMERO)
 
 for k in cursos:
     browser.get(pagina_base)
@@ -200,4 +201,3 @@ for k in cursos:
         print("El marco está en %s " % direccion_marcos + "%s" % nombremarco)
     except Exception:
         print("Este curso no tiene clases, no se guardó nada, se pasará al siguiente")
-

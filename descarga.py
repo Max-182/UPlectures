@@ -34,8 +34,8 @@ def continuarsiseencuentra(imagen):
             continue
 
 
-usuarioUP = "jm.huamanpi"
-contraseñaUP = "831134DD"
+usuarioUP = "*"
+contraseñaUP = "*"
 cursoUP = ["econometria i(d", "Macroeconomía Int"]
 
 
