@@ -127,7 +127,7 @@ for k in cursos:
         file.write(soup.prettify("utf-8"))
 
     # Cabeceras
-    tabla = soup.find('table', {"class": "table", "id": "tablaResultado"})
+        tabla = soup.find('table', {"class": "table", "id": "tablaResultado"})
     cabeceraslista = tabla.thead.tr
     cabecerastexto = cabeceraslista.contents
     cabeceras = []
