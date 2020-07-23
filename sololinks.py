@@ -107,6 +107,7 @@ for k in cursos:
     busqueda_desplegable.send_keys(Keys.ENTER)
 
     # Scraping por cada k curso
+    time.sleep(3)
     pg.hotkey('ctrl', 'shift', 'i')
     time.sleep(3)
     for i in range(2):
@@ -144,7 +145,7 @@ for k in cursos:
     duracion = []
     link = []  # Acá estarán los urls ca.bbcollab
     # link2 = []  # Acá estarán los urls cloudfront
-#    ACAAAAAAAAAA ABAJO PONER LINK2 LUEGOOOOO!!!!!!!!!!!!!!!!
+    #    ACAAAAAAAAAA ABAJO PONER LINK2 LUEGOOOOO!!!!!!!!!!!!!!!!
     datostot = [curso, seccion, fecha, nombreseccion, duracion, link]
     for i in range(len(claseslista)):
         curso.append((claseslista[i].find_all('td')[0]).text)
@@ -194,7 +195,7 @@ for k in cursos:
         marco1[cabeceras[i]] = datostot[i]
     try:
         print("Se creó el marco de datos del curso %s-" % marco1['Curso'].iloc[1] + "%s" % marco1['Sección'].iloc[0])
-# ACÁ PONER SU DIRECCIÓN DE DÓNDE GUARDAR LOS MARCOS
+    # ACÁ PONER SU DIRECCIÓN DE DÓNDE GUARDAR LOS MARCOS
         nombremarco = (marco1['Curso'].iloc[0]) + "-" + (marco1['Sección'].iloc[0]) + ".csv"
         direccion_marcos = "C:\\Users\\JoseMax\\Documents\\Python Scripts\\Marcos\\"
         marco1.to_csv('%s ' % direccion_marcos + '%s' % nombremarco, index=False, header=True)
