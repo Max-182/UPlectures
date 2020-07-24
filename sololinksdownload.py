@@ -10,7 +10,18 @@ import pyperclip as pc
 import time
 import os
 
-# Subrutinas necesaria
+usuarioUP = "*"
+contraseñaUP = "*"
+cursoUP = [" Sem. Economía y Financiamiento en Salud-A"]
+# cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
+respera = 55  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
+# Si su valor es más alto, se demorará menos en descargar el siguiente
+# Ajustar este ratio a su velocidad de internet de descarga
+# 55 está bien para ~4MB/s
+network = "Network.png"  # Acá poner "Networkc.png" si su Chrome está en modo claro
+numero = "206.png"  # Acá poner "206c.png" si su Chrome está en modo claro
+
+# Subrutinas necesarias
 
 
 def esperaryclickear(imagen):
@@ -35,10 +46,16 @@ def continuarsiseencuentra(imagen):
             continue
 
 
-usuarioUP = "*"
-contraseñaUP = "*"
-# cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
-cursoUP = [" Investigación Económica I-A", " Sem. Desigualdad y Alivio de la Pobreza-A"]
+def esperaryclickearderecha(imagen):
+    r3 = None
+    while r3 is None:
+        time.sleep(0.1)
+        r3 = pg.locateCenterOnScreen(imagen)
+        if r3 == None:
+            print("Todavía no se encuentra su imagen %s" % imagen)
+        else:
+            pg.click(r3, button='right')
+
 
 diractual = os.getcwd()
 
@@ -74,7 +91,9 @@ for k in cursoUP:
         browser.get(link[j])
         if j == 0:
             time.sleep(2)
-            esperaryclickear('Network.png')
+            os.chdir("%s" % diractual + "\\imagenes")
+            esperaryclickear(network)
+            os.chdir("%s" % diractual)
             time.sleep(1)
             for i in range(2):
                 pg.press('tab')
@@ -82,12 +101,18 @@ for k in cursoUP:
                 pg.press('right')
             pg.press('enter')
             for i in range(5):
-                time.sleep(0.5)
+                time.sleep(0.7)
                 pg.press('tab')
-            time.sleep(1)
-        continuarsiseencuentra('206.png')
-        time.sleep(0.3)
-        pg.press('down')
+            os.chdir("%s" % diractual + "\\imagenes")
+            esperaryclickear(numero)
+            os.chdir("%s" % diractual)
+            time.sleep(1.5)
+        else:
+            os.chdir("%s" % diractual + "\\imagenes")
+            continuarsiseencuentra(numero)
+            os.chdir("%s" % diractual)
+            time.sleep(0.3)
+            pg.press('down')
         time.sleep(0.5)
         pg.hotkey('shift', 'f10')
         time.sleep(0.5)
@@ -129,24 +154,7 @@ for k in cursoUP:
     for i in range(0, len(marco1['Link2'])):
         browser.get(marco1['Link2'].loc[i])  # Entra al enlace
         pg.hotkey('ctrl', 's')  # Guardar como
-        # time.sleep(10)
-        # pg.press('space')  # Pausar el video
         time.sleep(10)
-        # Esto siguiente lo pongo para descargarlo a mi disco duro externo
-        if i == 0:
-            for j in range(3):
-                time.sleep(0.5)
-                pg.hotkey('shift', 'tab')
-            for j in range(45):
-                pg.press('down')
-            time.sleep(1)
-            pg.press('up')
-            time.sleep(1)
-            pg.press('enter')
-            for j in range(2):
-                time.sleep(0.3)
-                pg.press('tab')
-            time.sleep(3)
         pg.typewrite(marco1['Curso'].loc[i] + '_'
                      + marco1['Sección'].loc[i] + '_'
                      + "(%s de " % (i + 1) + "%s)" % (len(marco1['Link2'])) + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
@@ -155,8 +163,13 @@ for k in cursoUP:
         y = marco1['Duración'].loc[i]
         espera = int(y[0]) * 3600 + int(y[2:3]) * 60 + int(y[-2:-1])  # El tiempo de espera entre descargas dependerá de lo largo del video
         print("Este video dura %s " % marco1['Duración'].loc[i])
-        print("El próximo video se descargará en %s" % round((espera / 55), 1) + " segundos")
-        time.sleep(espera / 55)  # Descargará aproximadamente cuando termine el anterior
+        print("El próximo video se descargará en %s" % round((espera / respera), 1) + " segundos")
+        if i == 0:
+            for j in range(2):
+                time.sleep(0.7)
+                pg.press('tab')
         time.sleep(2)
-    time.sleep(150)  # Espera 5 minutos hasta descargar el siguiente curso
+        pg.press('space')  # Pausar el video
+        time.sleep(espera / respera)  # Descargará aproximadamente cuando termine el anterior
+    # time.sleep(150)  # Espera 5 minutos hasta descargar el siguiente curso
     browser.quit()

@@ -61,7 +61,7 @@ boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
 boton_desplegable.click()
 busqueda = browser.find_element_by_class_name("select2-search__field")
 busqueda_desplegable = browser.find_element_by_xpath('//*[@id="ctl00_Html1"]/body/span/span/span[1]/input')
-busqueda_desplegable.send_keys("a")
+busqueda_desplegable.send_keys("b")
 busqueda_desplegable.send_keys(Keys.ENTER)
 
 # Scraping inicial
@@ -95,10 +95,9 @@ del cursos[0]  # FALTA EL CURSO DE ACTO JURÍDICO (EL PRIMERO)
 
 for k in cursos:
     browser.get(pagina_base)
-    time.sleep(4)
+    time.sleep(2)
 
     # Videos de un curso
-    browser.get(pagina_base)
     boton_desplegable = browser.find_element_by_id("select2-searchCursos-container")
     boton_desplegable.click()
     busqueda = browser.find_element_by_class_name("select2-search__field")
