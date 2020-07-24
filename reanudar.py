@@ -22,12 +22,12 @@ def juntarseparados(lista, a):
 
 diractual = os.getcwd()
 
-usuarioUP = "jm.huamanpi"
-contraseñaUP = "831134DD"
-cursoreanudar = " Microeconomía II-B"
+usuarioUP = "*"
+contraseñaUP = "*"
+cursoreanudar = " Matemáticas I-A"
 videosreanudar = list()
-juntarrangos(videosreanudar, 14 - 1, 50 - 1)  # Acá la cadena de videos a reanudar
-# juntarseparados(videosreanudar,[#,#]) #Acá videos separados a reanudar
+# juntarrangos(videosreanudar, 47 - 1, 50 - 1)  # Acá la cadena de videos a reanudar
+juntarseparados(videosreanudar, [2, 21, 22])  # Acá videos separados a reanudar
 respera = 40  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
 # Si su valor es más alto, se demorará menos en descargar el siguiente
 # Ajustar este ratio a su velocidad de internet de descarga
@@ -72,7 +72,7 @@ for i in videosreanudar:
         pg.hotkey('winleft', 'left')
         time.sleep(0.4)
         pg.press('enter')
-        time.sleep(0.4)
+        time.sleep(2)
     pg.hotkey('ctrl', 's')  # Guardar como
     time.sleep(10)
     # Esto siguiente lo pongo para descargarlo a mi disco duro externo
@@ -107,4 +107,4 @@ for i in videosreanudar:
     pg.press('space')  # Pausar el video
     time.sleep(espera / respera)  # Descargará aproximadamente cuando termine el anterior
 # time.sleep(150)  # Espera 5 minutos hasta descargar el siguiente curso
-browser.quit()
+# browser.quit()

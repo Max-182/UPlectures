@@ -12,7 +12,7 @@ import os
 
 usuarioUP = "*"
 contraseñaUP = "*"
-cursoUP = [" Microeconomía II-B", " Microeconomía II-A"]
+cursoUP = [" Matemáticas I-A", " Matemáticas II-A", " Macroeconomía I-B", " Macroeconomía II-B", " Macroeconomía III-A"]
 # cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
 respera = 55  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
 # Si su valor es más alto, se demorará menos en descargar el siguiente
@@ -149,46 +149,4 @@ for k in cursoUP:
     direccion_marcos = "C:\\Users\\JoseMax\\Documents\\Python Scripts\\Marcos2\\"
     marco1.to_csv('%s ' % direccion_marcos + '%s' % nombremarco, index=False, header=True)
     print("El marco está en %s " % direccion_marcos + "%s" % nombremarco)
-
-    # Descargar con nombre
-    for i in range(0, len(marco1['Link2'])):
-        try:
-            browser.get(marco1['Link2'].loc[i])  # Entra al enlace
-        except:
-            pg.hotkey('ctrl','r') #Esto por si la página no carga
-            browser.get(marco1['Link2'].loc[i])
-        pg.hotkey('ctrl', 's')  # Guardar como
-        time.sleep(10)
-        # Esto siguiente lo pongo para descargarlo a mi disco duro externo
-        if i == 0:
-            for j in range(3):
-                time.sleep(0.5)
-                pg.hotkey('shift', 'tab')
-            for j in range(45):
-                pg.press('down')
-            time.sleep(1)
-            pg.press('up')
-            time.sleep(1)
-            pg.press('enter')
-            for j in range(2):
-                time.sleep(0.3)
-                pg.press('tab')
-            time.sleep(3)
-        pg.typewrite(marco1['Curso'].loc[i] + '_'
-                     + marco1['Sección'].loc[i] + '_'
-                     + "(%s de " % (i + 1) + "%s)" % (len(marco1['Link2'])) + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
-        pg.press('enter')
-        print("video descargándose %s" % (i + 1) + "/%s " % (len(marco1['Link2'])) + ("(%s%%)") % (round((i + 1) * 100 / (len(marco1['Link2'])), 2)))
-        y = marco1['Duración'].loc[i]
-        espera = int(y[0]) * 3600 + int(y[2:3]) * 60 + int(y[-2:-1])  # El tiempo de espera entre descargas dependerá de lo largo del video
-        print("Este video dura %s " % marco1['Duración'].loc[i])
-        print("El próximo video se descargará en %s" % round((espera / respera), 1) + " segundos")
-        if i == 0:
-            for j in range(2):
-                time.sleep(0.7)
-                pg.press('tab')
-        time.sleep(2)
-        pg.press('space')  # Pausar el video
-        time.sleep(espera / respera)  # Descargará aproximadamente cuando termine el anterior
-    # time.sleep(150)  # Espera 5 minutos hasta descargar el siguiente curso
     browser.quit()
