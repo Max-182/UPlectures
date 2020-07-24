@@ -7,7 +7,7 @@ Actualmente estoy trabajando en la rama3
 
 * Necesitan tener instalado **Python 3**. Pueden revisar si tienen Python si van a su línea de comandos (*Símbolo de sistema* en Windows) y escriben `python --version` . Usuarios de Mac ya deberían tenerlo instalado por defecto. Si no lo tienen lo pueden descargar [aquí](https://www.python.org/downloads/).  
 
-*  Necesitan tener descargado un navegador y un controlador (*driver*) de este. Acá usamos **ChromeDriver**. Lo pueden descargar [aquí]([https://sites.google.com/a/chromium.org/chromedriver/downloads). Deben asegurarse de descargar la misma versión que su navegador **Google Chrome**. Para ver la versión de su navegador denle click al botón de opciones en la esquina superior derecha, luego a *Ayuda* > *Información de Google Chrome*. Ahí revisen su versión (e.g. *84.0.4147.89*) y descarguen su controlador correspondiente.  
+*  Necesitan tener descargado un navegador y un controlador (*driver*) de este. Acá usamos **ChromeDriver**. Lo pueden descargar [aquí](https://sites.google.com/a/chromium.org/chromedriver/downloads). Deben asegurarse de descargar la misma versión que su navegador **Google Chrome**. Para ver la versión de su navegador denle click al botón de opciones en la esquina superior derecha, luego a *Ayuda* > *Información de Google Chrome*. Ahí revisen su versión (e.g. *84.0.4147.89*) y descarguen su controlador correspondiente.  
 
 * Además necesitan tener los módulos para el proyecto, descárguenlos desde su línea de comandos (Para los que usen Anaconda vayan a Anaconda Prompt) y ejecuten:
 	* `pip install selenium` para instalar **Selenium** 
