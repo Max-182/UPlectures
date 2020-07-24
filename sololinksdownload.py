@@ -150,7 +150,7 @@ for k in cursoUP:
 
     # ACÁ PONER SU DIRECCIÓN DE DÓNDE GUARDAR LOS MARCOS
     nombremarco = (marco1['Curso'].iloc[0]) + "-" + (marco1['Sección'].iloc[0]) + ".csv"
-    direccion_marcos = "%s" % diractual"\\Marcos2\\"
+    direccion_marcos = diractual +"\\Marcos2\\"
     marco1.to_csv('%s ' % direccion_marcos + '%s' % nombremarco, index=False, header=True)
     print("El marco está en %s " % direccion_marcos + "%s" % nombremarco)
 
