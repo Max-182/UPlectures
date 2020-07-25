@@ -10,9 +10,9 @@ import pyperclip as pc
 import time
 import os
 
-usuarioUP = "*"
-contraseñaUP = "*"
-cursoUP = [" Matemáticas I-A", " Matemáticas II-A", " Macroeconomía I-B", " Macroeconomía II-B", " Macroeconomía III-A"]
+usuarioUP = "jm.huamanpi"
+contraseñaUP = "831134DD"
+cursoUP = [" Ingeniería de Datos-B"]
 # cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
 respera = 55  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
 # Si su valor es más alto, se demorará menos en descargar el siguiente
@@ -123,14 +123,14 @@ for k in cursoUP:
         pg.hotkey('ctrl', 'l')
         time.sleep(0.4)
         pg.hotkey('ctrl', 'c')
-        time.sleep(0.2)
+        time.sleep(0.4)
         link2.append(pc.paste())
-        if link2[j] == link2[j - 1]:
-            x = "Sí"
-        elif len(link2) == 0:
+        if len(link2) == 1:
             x = "No había anterior"
+        elif (link2[j] == link2[j - 1]) & (len(link2) != 1):
+            x = "Sí, hay que revisar esto"
         else:
-            x = "No"
+            x = "No, está bien :D"
         print("Hay " + str(len(link2)) + " links2 guardados ¿es igual al último? %s" % x)
         # browser.switch_to.window(browser.window_handles[1])
         # link2.append(browser.current_url)

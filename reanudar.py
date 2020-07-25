@@ -22,12 +22,12 @@ def juntarseparados(lista, a):
 
 diractual = os.getcwd()
 
-usuarioUP = "*"
-contraseñaUP = "*"
-cursoreanudar = " Matemáticas II-A"
+usuarioUP = "jm.huamanpi"
+contraseñaUP = "831134DD"
+cursoreanudar = " Ingeniería de Datos-B"
 videosreanudar = list()
-# juntarrangos(videosreanudar, 47 - 1, 50 - 1)  # Acá la cadena de videos a reanudar
-juntarseparados(videosreanudar, [0, 1, 25, 26, 27, 30])  # Acá videos separados a reanudar
+# juntarseparados(videosreanudar, [0])  # Acá videos separados a reanudar
+juntarrangos(videosreanudar, 1 - 1, 30 - 1)  # Acá la cadena de videos a reanudar
 respera = 40  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
 # Si su valor es más alto, se demorará menos en descargar el siguiente
 # Ajustar este ratio a su velocidad de internet de descarga
