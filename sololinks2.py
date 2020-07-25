@@ -10,30 +10,19 @@ import pyperclip as pc
 import time
 import os
 
-# ESCRIBIR SU USUARIO
+# ESTE SCRIPT ÚNICAMENTE BAJA LOS LINK2 DE LOS VIDEOS
+# (ESTOS SOLO ESTARÁN 12 HORAS DISPONIBLES)
+
 usuarioUP = "*"
-# ESCRIBIR SU CONTRASEÑA
 contraseñaUP = "*"
-# ESCRIBIR LOS CURSOS A DESCARGAR (EXACTAMENTE IGUAL COMO ESTÉ EN LA CARPETA 'MARCOS')
-cursoUP = ["Economía General I-A", "Economía General I-B"]  # Ejemplos
-# ESCRIBIR DIRECCIÓN DEL CONTROLADOR (DONDE ESTÁ INSTALADO)
-dcontrolador = "C:\\Program Files (x86)\\chromedriver83.exe"  # Ejemplo
-# EN WINDOWS, PONER DOBLE '\' PARA QUE SE LEA BIEN
-
-# ESCRIBIR DIRECCIÓN DE LA CARPETA 'MARCOS2' EN SU COMPUTADORA
-direccion_marcos = "C:\\Users\\UserName\\Documents\\Python Scripts\\Marcos2"  # Ejemplo
-# EN WINDOWS, PONER DOBLE '\' PARA QUE SE LEA BIEN
-
-# ELEGIR UN RATIO DE QUÉ TANTO SE DEMORA ENTRE DESCARGAS
+cursoUP = [" Ingeniería de Datos-B"]
+# cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
 respera = 55  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
 # Si su valor es más alto, se demorará menos en descargar el siguiente
 # Ajustar este ratio a su velocidad de internet de descarga
 # 55 está bien para ~4MB/s
-
 network = "Network.png"  # Acá poner "Networkc.png" si su Chrome está en modo claro
 numero = "206.png"  # Acá poner "206c.png" si su Chrome está en modo claro
-
-# IMPORTANTE: SI NO SE ENCUENTRAN SUS IMÁGENES, TOMARLES SCREENSHOT
 
 # Subrutinas necesarias
 
@@ -75,7 +64,7 @@ diractual = os.getcwd()
 
 for k in cursoUP:
     # Entrar a powercampus
-    browser = webdriver.Chrome(dcontrolador)  # Acá puse el driver
+    browser = webdriver.Chrome("C:\Program Files (x86)\chromedriver83.exe")  # Acá puse el driver
     browser.get("https://autoservicio2.up.edu.pe/ss/Home.aspx")
     barra_user = browser.find_element_by_id("ctl00_ucUserLogin_lvLoginUser_ucLoginUser_lcLoginUser_UserName")
     barra_password = browser.find_element_by_id("ctl00_ucUserLogin_lvLoginUser_ucLoginUser_lcLoginUser_Password")
@@ -137,17 +126,20 @@ for k in cursoUP:
         pg.hotkey('ctrl', 'l')
         time.sleep(0.4)
         pg.hotkey('ctrl', 'c')
-        time.sleep(0.2)
+        time.sleep(0.4)
         link2.append(pc.paste())
-        if link2[j] == link2[j - 1]:
-            x = "Sí"
-        elif len(link2) == 0:
+        if len(link2) == 1:
             x = "No había anterior"
+        elif (link2[j] == link2[j - 1]) & (len(link2) != 1):
+            x = "Sí, hay que revisar esto"
         else:
-            x = "No"
+            x = "No, está bien :D"
         print("Hay " + str(len(link2)) + " links2 guardados ¿es igual al último? %s" % x)
+        # browser.switch_to.window(browser.window_handles[1])
+        # link2.append(browser.current_url)
         print("Se encontró el link2 %s/" % (j + 1) + "%s " % (len(link)) + ("(%s%%)") % (round((j + 1) * 100 / (len(link)), 2)))
         pg.hotkey('ctrl', 'w')
+        # browser.switch_to.window(browser.window_handles[0])
     time.sleep(1.5)
     pg.hotkey('ctrl', 'shift', 'i')
 
@@ -155,40 +147,9 @@ for k in cursoUP:
     marco1['Link2'] = link2
     print("Se agregó la columna Link2 al marco de datos de %s-" % marco1['Curso'].iloc[1] + "%s" % marco1['Sección'].iloc[1])
 
-    # ACÁ VA SU DIRECCIÓN DE MARCOS2
+    # ACÁ PONER SU DIRECCIÓN DE DÓNDE GUARDAR LOS MARCOS
     nombremarco = (marco1['Curso'].iloc[0]) + "-" + (marco1['Sección'].iloc[0]) + ".csv"
-    direccion_marcos = diractual + "\\Marcos2\\"
+    direccion_marcos = "C:\\Users\\JoseMax\\Documents\\Python Scripts\\Marcos2\\"
     marco1.to_csv('%s ' % direccion_marcos + '%s' % nombremarco, index=False, header=True)
     print("El marco está en %s " % direccion_marcos + "%s" % nombremarco)
-
-    # Descargar con nombre
-    for i in range(0, len(marco1['Link2'])):
-        try:
-            browser.get(marco1['Link2'].loc[i])  # Entra al enlace
-        except:
-            pg.hotkey('ctrl', 'r')  # Esto por si la página no carga
-            browser.get(marco1['Link2'].loc[i])
-            print('El controlador se refrescó porque no cargaba')
-        pg.hotkey('ctrl', 's')  # Guardar como
-        if i == 0:
-            time.sleep(10)
-        time.sleep(15)
-        pg.typewrite(marco1['Curso'].loc[i] + '_'
-                     + marco1['Sección'].loc[i] + '_'
-                     + "(%s de " % (i + 1) + "%s)" % (len(marco1['Link2'])) + '.mp4')  # Se guardará con el nombre 'Curso_Seccion_Nombresesion_.mp4'
-        pg.press('enter')
-        print("video descargándose %s" % (i + 1) + "/%s " % (len(marco1['Link2'])) + ("(%s%%)") % (round((i + 1) * 100 / (len(marco1['Link2'])), 2)))
-        y = marco1['Duración'].loc[i]
-        espera = int(y[0]) * 3600 + int(y[2:3]) * 60 + int(y[-2:-1])  # El tiempo de espera entre descargas dependerá de lo largo del video
-        print("Este video dura %s " % marco1['Duración'].loc[i])
-        print("El próximo video se descargará en %s" % round((espera / respera), 2) + " segundos")
-        time.sleep(3)
-        if i == 0:
-            for j in range(2):
-                time.sleep(0.7)
-                pg.press('tab')
-        time.sleep(2)
-        pg.press('space')  # Pausar el video
-        time.sleep(espera / respera)  # Descargará aproximadamente cuando termine el anterior
-    time.sleep(250)  # Espera # segundos hasta descargar el siguiente curso
-    browser.quit()
+    # browser.quit()
