@@ -22,8 +22,6 @@ def juntarseparados(lista, a):
 
 diractual = os.getcwd()
 
-usuarioUP = "jm.huamanpi"
-contraseñaUP = "831134DD"
 cursoreanudar = " Ingeniería de Datos-B"
 videosreanudar = list()
 # juntarseparados(videosreanudar, [0])  # Acá videos separados a reanudar

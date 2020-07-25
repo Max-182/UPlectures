@@ -10,8 +10,8 @@ import pyperclip as pc
 import time
 import os
 
-usuarioUP = "jm.huamanpi"
-contraseñaUP = "831134DD"
+usuarioUP = "*"
+contraseñaUP = "*"
 cursoUP = [" Ingeniería de Datos-B"]
 # cursoUP = [" Economía General I-A", " Economía General II-A", " Economía Pública-A", " Economía y Derecho-A"]
 respera = 55  # Este es el ratio de espera, dice qué tanto tardará en descargar el siguiente video
